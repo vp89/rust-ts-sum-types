@@ -5,24 +5,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 (async () => {
-    const animal = (await axios_1.default.get('http://localhost:4000/')).data;
-    switch (animal.animal.type) {
-        case "Dog":
-            const dog = animal.animal;
-            console.log(`${dog.a} ${dog.b}`);
+    const response = (await axios_1.default.get('http://localhost:4000/')).data;
+    switch (response.animal.type) {
+        case AnimalKind.Dog:
+            console.log(`${response.animal.a} ${response.animal.b}`);
             break;
-        case "Cat":
-            const cat = animal.animal;
-            console.log(`${cat.c} ${cat.d}`);
+        case AnimalKind.Cat:
+            console.log(`${response.animal.c} ${response.animal.d}`);
             break;
-        case "Chicken":
-            const chicken = animal.animal;
-            console.log(`${chicken.a} ${chicken.b}`);
+        case AnimalKind.Chicken:
+            console.log(`${response.animal.a} ${response.animal.b}`);
             break;
         default:
-            exhaustive(animal.animal);
+            exhaustive(response.animal);
     }
 })();
 function exhaustive(x) {
     throw new Error("BLARGH");
 }
+var AnimalKind;
+(function (AnimalKind) {
+    AnimalKind["Dog"] = "Dog";
+    AnimalKind["Cat"] = "Cat";
+    AnimalKind["Chicken"] = "Chicken";
+})(AnimalKind || (AnimalKind = {}));

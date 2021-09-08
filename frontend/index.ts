@@ -1,28 +1,25 @@
 import axios from 'axios';
 
 (async () => {
-    const animal = (await axios.get<Animal>('http://localhost:4000/')).data;
+    const response = (await axios.get<Animal>('http://localhost:4000/')).data;
 
-    switch (animal.animal.type) {
-        case "Dog":
-            const dog = animal.animal as Dog;
-            console.log(`${dog.a} ${dog.b}`);
+    switch (response.animal.type) {
+        case AnimalKind.Dog:
+            console.log(`${response.animal.a} ${response.animal.b}`);
             break;
-        case "Cat":
-            const cat = animal.animal as Cat;
-            console.log(`${cat.c} ${cat.d}`);
+        case AnimalKind.Cat:
+            console.log(`${response.animal.c} ${response.animal.d}`);
             break;
-        case "Chicken":
-            const chicken = animal.animal as Chicken;
-            console.log(`${chicken.a} ${chicken.b}`);
+        case AnimalKind.Chicken:
+            console.log(`${response.animal.a} ${response.animal.b}`);
             break
         default:
-            exhaustive(animal.animal);
+            exhaustive(response.animal);
     }
 })();
 
 function exhaustive(x: never): never {
-    throw new Error("BLARGH");
+    throw new Error("Unhandled animal kind in the system");
 }
 
 type Animal = {
@@ -30,20 +27,26 @@ type Animal = {
     animal: Dog | Cat | Chicken
 }
 
+enum AnimalKind {
+    Dog = "Dog",
+    Cat = "Cat",
+    Chicken = "Chicken"
+}
+
 type Dog = {
-    type: "Dog",
+    type: AnimalKind.Dog,
     a: string,
     b: string
 }
 
 type Cat = {
-    type: "Cat",
+    type: AnimalKind.Cat,
     c: string,
     d: string
 }
 
 type Chicken = {
-    type: "Chicken",
+    type: AnimalKind.Chicken,
     a: string,
     b: string
 }
