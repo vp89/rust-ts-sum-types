@@ -1,9 +1,10 @@
-CREATE DATABASE animals;
+CREATE DATABASE content_catalog;
 
-\c animals
+\c content_catalog
 
-CREATE TABLE IF NOT EXISTS animals (
-    animal_id SERIAL PRIMARY KEY,
-    animal JSONB NOT NULL,
-    animal_kind_id INT NOT NULL
+CREATE TABLE IF NOT EXISTS content_entries (
+    entry_id SERIAL PRIMARY KEY,
+    content_url VARCHAR(500) NOT NULL,
+    content_type_id INT NOT NULL,
+    content_metadata JSONB NOT NULL
 );
